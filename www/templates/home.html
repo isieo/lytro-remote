@@ -1,0 +1,11 @@
+<div id="editor" layout-fill layout="column" layout="center center">
+    <md-button md-if="!isConnected" aria-label="" no-ink ng-click="connect()" class="md-primary  md-raised">
+        Connect
+    </md-button>
+    <md-button md-if="isConnected" aria-label="" no-ink ng-click="disconnect()" class="md-primary  md-raised">
+        disonnect
+    </md-button>
+    <md-button md-if="isConnected" aria-label="" no-ink ng-click="snap()" class="md-primary md-raised">
+        Snap Photo
+    </md-button>
+</div>

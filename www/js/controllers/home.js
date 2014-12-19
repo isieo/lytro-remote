@@ -1,8 +1,20 @@
 angular.module('lytroremote.controllers.home', [])
 
-.controller('HomeCtrl', function($scope,$http,$window,$location,$mdDialog) {
+.controller('HomeCtrl', function($scope,$http,$window,$location,$mdDialog,$timeout) {
   var connectionID = null;
+  var t = $timeout(checkConnection,500)
   $scope.isConnected = false;
+
+  function checkConnection(){
+    window.tlantic.plugins.socket.isConnected(connectionID,function(result){
+      $scope.isConnected =( result == 1) ? true : false
+      $scope.$apply();
+      t = $timeout(checkConnection,500)
+    },function(){
+
+    });
+  }
+
 
   $scope.connect = function(){
     window.tlantic.plugins.socket.connect(
@@ -39,7 +51,7 @@ angular.module('lytroremote.controllers.home', [])
 
 
   $scope.snap = function(){
-    window.tlantic.plugins.socket.send(
+    window.tlantic.plugins.socket.sendBinary(
       function () {
         console.log('worked!');
       },
@@ -48,7 +60,9 @@ angular.module('lytroremote.controllers.home', [])
         console.log('failed!');
       },
       connectionID,
-      "\xaf\x55\xaa\xfa\x00\x00\x00\x00\x00\x00\x00\x00\xc0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+      [0xaf, 0x55, 0xaa, 0xfa, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+       0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+       0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
     );
   }
 });

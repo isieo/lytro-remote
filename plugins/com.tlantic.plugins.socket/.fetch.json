@@ -1,1 +1,1 @@
-{"source":{"type":"local","path":"/home/calvin/.plugman/cache/com.tlantic.plugins.socket/0.3.1/package"}}
+{"source":{"type":"git","url":"https://github.com/shblythe/cdv-socket-plugin.git","subdir":"."}}
